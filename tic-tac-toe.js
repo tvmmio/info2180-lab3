@@ -1,6 +1,8 @@
 document.addEventListener("DOMContentLoaded", function () {
   const squares = document.querySelectorAll("#board div");
   const status = document.getElementById("status");
+  const newGameButton = document.querySelector(".btn");
+  const startMessage = status.textContent;
 
   let currentPlayer = "X";
   let gameState = ["", "", "", "", "", "", "", "", ""];
@@ -45,5 +47,16 @@ document.addEventListener("DOMContentLoaded", function () {
     square.addEventListener("mouseout", function () {
       square.classList.remove("hover");
     });
+  });
+
+  newGameButton.addEventListener("click", function () {
+    gameState = ["", "", "", "", "", "", "", "", ""];
+    currentPlayer = "X";
+    squares.forEach(function (square) {
+      square.textContent = "";
+      square.classList.remove("X", "O");
+    });
+    status.textContent = startMessage;
+    status.classList.remove("you-won");
   });
 });
