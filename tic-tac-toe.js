@@ -6,6 +6,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   let currentPlayer = "X";
   let gameState = ["", "", "", "", "", "", "", "", ""];
+  let gameOver = false;
 
   const winningCombos = [
     [0, 1, 2], [3, 4, 5], [6, 7, 8],
@@ -27,6 +28,9 @@ document.addEventListener("DOMContentLoaded", function () {
     square.classList.add("square");
 
     square.addEventListener("click", function () {
+      if (gameState[index] !== "" || gameOver) {
+        return;
+      }
       gameState[index] = currentPlayer;
       square.textContent = currentPlayer;
       square.classList.add(currentPlayer);
@@ -35,8 +39,9 @@ document.addEventListener("DOMContentLoaded", function () {
       if (winner) {
         status.textContent = "Congratulations! " + winner + " is the Winner!";
         status.classList.add("you-won");
+        gameOver = true;
+        return;
       }
-
       currentPlayer = currentPlayer === "X" ? "O" : "X";
     });
 
@@ -52,6 +57,7 @@ document.addEventListener("DOMContentLoaded", function () {
   newGameButton.addEventListener("click", function () {
     gameState = ["", "", "", "", "", "", "", "", ""];
     currentPlayer = "X";
+    gameOver = false;
     squares.forEach(function (square) {
       square.textContent = "";
       square.classList.remove("X", "O");
